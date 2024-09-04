@@ -7,7 +7,7 @@ void main() {
   runApp(MaterialApp(
     initialRoute: '/',
     routes: {
-      '/': (context) => LogingPages(),
+      '/': (context) => Logingpage(),
       '/mainpage' : (context) => MainPages(),
       '/textcontroler': (context) => TextControler()
   },

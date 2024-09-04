@@ -1,4 +1,4 @@
-import 'package:ecommars/Custom%20Widget/Imageadd.dart';
+
 import 'package:ecommars/Pages/TextControler.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -27,10 +27,6 @@ class Navigetion extends StatelessWidget {
               Navigator.pushNamed(context,'/textcontroler');
             },
               child: Icon(Icons.add)),
-          GestureDetector(
-              onTap: (){
-              },
-              child: Icon(Icons.image_search))
         ] );
   }
 }

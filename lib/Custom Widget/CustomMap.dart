@@ -1,3 +1,4 @@
+import 'package:ecommars/Function/GetData.dart';
 import 'package:flutter/material.dart';
 class Custommap extends StatelessWidget {
   String? image_url;
@@ -6,7 +7,8 @@ class Custommap extends StatelessWidget {
   int? rating;
   int? price;
   String? description;
-  Custommap({super.key,this.image_url,this.id,this.name,this.rating,this.price,this.description});
+  var GetData;
+  Custommap({super.key,this.image_url,this.id,this.name,this.rating,this.price,this.description,this.GetData});
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +33,18 @@ class Custommap extends StatelessWidget {
              ),
           Row(
             children: [Text('${name}',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
-              SizedBox(width: 70,),
+             Spacer(),
               Text('\$${price}',style: TextStyle(fontSize: 20),),],
           ),
-          Text('${description}'),
+          Text('${description}',maxLines: 2,overflow: TextOverflow.ellipsis,),
           Text('${rating} '),
-
+          SizedBox(height: 10,),
+          GestureDetector(
+            onTap: (){
+              deletData(id, GetData);
+            },
+            child: Icon(Icons.delete),)
+          
         ],
       ),
     );
