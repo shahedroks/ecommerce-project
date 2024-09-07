@@ -5,17 +5,17 @@ import 'package:ecommars/Function/GetData.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
 import 'package:image_picker/image_picker.dart';
-class TextControler extends StatefulWidget {
+class DataAdd extends StatefulWidget {
 
 
 
-  TextControler({super.key});
+  DataAdd({super.key});
 
   @override
-  State<TextControler> createState() => _TextControlerState(); }
+  State<DataAdd> createState() => _DataAddState(); }
 
 
-  class _TextControlerState extends State<TextControler> {
+  class _DataAddState extends State<DataAdd> {
 
     // Text Controler
     TextEditingController id = TextEditingController();

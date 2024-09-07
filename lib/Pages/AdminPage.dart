@@ -7,18 +7,22 @@ import 'package:ecommars/Custom%20Widget/searchber.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:icons_plus/icons_plus.dart';
-class MainPages extends StatefulWidget {
-  const MainPages({super.key});
+class AdminPage extends StatefulWidget {
+  const AdminPage({super.key});
 
   @override
-  State<MainPages> createState() => _MainPagesState();
+  State<AdminPage> createState() => _AdminPageState();
 }
 
-class _MainPagesState extends State<MainPages> {
+class _AdminPageState extends State<AdminPage> {
   List alldata = [];
 
  // defind function
-
+  void deletData (id)async {
+    var uri = Uri.parse('http://68.178.163.174:5501/product/delete?id=${id}');
+    http.Response res = await http.delete(uri);
+    GetData();
+  }
   void GetData () async {
     var url = Uri.parse('http://68.178.163.174:5501/product');
     http.Response res = await http.get(url);
@@ -27,7 +31,6 @@ class _MainPagesState extends State<MainPages> {
       alldata=decode;
     });
   }
-@override
 @override
   void initState() {
     // TODO: implement initState
