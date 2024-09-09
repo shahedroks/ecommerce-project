@@ -4,6 +4,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:ecommars/Custom%20Widget/CustomMap.dart';
 import 'package:ecommars/Custom%20Widget/Navigation.dart';
 import 'package:ecommars/Custom%20Widget/searchber.dart';
+import 'package:ecommars/Pages/Product.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:icons_plus/icons_plus.dart';
@@ -54,7 +55,11 @@ class _UserPageState extends State<UserPage> {
             children: alldata.map((i){
               return Column(
                 children: [
-                  Custommap(image_url: i['image_url'],name: i['name'],price: i['price'],rating: i['rating'],description: i['description'],),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (builder) => ProductDescription(id: i['id'],)));
+                    },
+                      child: Custommap(image_url: i['image_url'],name: i['name'],price: i['price'],rating: i['rating'],description: i['description'],)),
                   Row(
                     children: [
                       Container(

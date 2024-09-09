@@ -113,7 +113,21 @@ class _LogingpageState extends State<Logingpage> {
           ElevatedButton(onPressed: (){
           loging ();
     },style: ElevatedButton.styleFrom(backgroundColor: Colors.red[200]), child: Text('Login',
-    style: TextStyle(fontWeight: FontWeight.bold),))
+    style: TextStyle(fontWeight: FontWeight.bold),)),
+          SizedBox(height: 20,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('I Want '),
+              SizedBox(width: 5,),
+              GestureDetector(
+                onTap: (){
+                  Navigator.pushReplacementNamed(context, '/register');
+                },
+                child: Text('Register...?',style: TextStyle(color: Colors.green),),
+              )
+            ],
+          )
         ],
       ),
     );

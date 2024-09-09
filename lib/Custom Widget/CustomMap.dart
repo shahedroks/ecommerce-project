@@ -34,9 +34,9 @@ class Custommap extends StatelessWidget {
           Row(
             children: [Text('${name}',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
              Spacer(),
-              Text('\$${price}',style: TextStyle(fontSize: 20),),],
+              Text('Tk${price}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),],
           ),
-          Text('${description}',maxLines: 2,overflow: TextOverflow.ellipsis,),
+          Text('${description}',maxLines: 2,overflow: TextOverflow.ellipsis,style: TextStyle(color: Colors.grey[700]),),
           Text('${rating} '),
           SizedBox(height: 10,),
         ],
