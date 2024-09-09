@@ -1,5 +1,5 @@
 
-import 'package:ecommars/Pages/TextControler.dart';
+import 'package:ecommars/Pages/Add_Product.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,7 +24,7 @@ class Navigetion extends StatelessWidget {
          GestureDetector (child: Icon(Icons.edit)),
           GestureDetector (
             onTap: (){
-              Navigator.pushNamed(context,'/textcontroler');
+              Navigator.pushNamed(context,'/addproduct');
             },
               child: Icon(Icons.add)),
         ] );

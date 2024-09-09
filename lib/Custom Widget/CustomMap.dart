@@ -7,8 +7,8 @@ class Custommap extends StatelessWidget {
   int? rating;
   int? price;
   String? description;
-  var GetData;
-  Custommap({super.key,this.image_url,this.id,this.name,this.rating,this.price,this.description,this.GetData});
+
+  Custommap({super.key,this.image_url,this.id,this.name,this.rating,this.price,this.description,});
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +39,6 @@ class Custommap extends StatelessWidget {
           Text('${description}',maxLines: 2,overflow: TextOverflow.ellipsis,),
           Text('${rating} '),
           SizedBox(height: 10,),
-          GestureDetector(
-            onTap: (){
-              deletData(id, GetData);
-            },
-            child: Icon(Icons.delete),)
-          
         ],
       ),
     );

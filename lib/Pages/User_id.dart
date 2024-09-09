@@ -7,18 +7,16 @@ import 'package:ecommars/Custom%20Widget/searchber.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:icons_plus/icons_plus.dart';
-class MainPages extends StatefulWidget {
-  const MainPages({super.key});
+class UserPage extends StatefulWidget {
+  const UserPage({super.key});
 
   @override
-  State<MainPages> createState() => _MainPagesState();
+  State<UserPage> createState() => _UserPageState();
 }
 
-class _MainPagesState extends State<MainPages> {
+class _UserPageState extends State<UserPage> {
   List alldata = [];
-
   // defind function
-
   void GetData () async {
     var url = Uri.parse('http://68.178.163.174:5501/product');
     http.Response res = await http.get(url);
@@ -27,7 +25,7 @@ class _MainPagesState extends State<MainPages> {
       alldata=decode;
     });
   }
-  @override
+  
   @override
   void initState() {
     // TODO: implement initState
@@ -39,7 +37,6 @@ class _MainPagesState extends State<MainPages> {
     return
       Scaffold(
         drawer: Drawer(child: ListView()),
-
         appBar: AppBar(
             flexibleSpace: Image.asset('Assets/Buy.gif', fit: BoxFit.cover,),
             title: Text('Buy And Sell',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),),
@@ -48,22 +45,40 @@ class _MainPagesState extends State<MainPages> {
               Icon(Icons.sell)
             ],
             backgroundColor: Colors.red[300]
-
-
         ),
         body:
         GridView(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             childAspectRatio: (1/1.6),
-
             crossAxisSpacing: 8,
             crossAxisCount: 2),
             children: alldata.map((i){
-              return Custommap(image_url: i['image_url'],name: i['name'],price: i['price'],rating: i['rating'],description: i['description'],);
+              return Column(
+                children: [
+                  Custommap(image_url: i['image_url'],name: i['name'],price: i['price'],rating: i['rating'],description: i['description'],),
+                  Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                        child: GestureDetector(
+                          onTap: (){},
+                          child: Icon(Icons.event_busy),),
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                          margin: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(color: Colors.blue),
+                          child: Text('Buy Naw',style: TextStyle(color: Colors.white),),
+                        ),
+                      )
+                    ],
+                  )
+
+                ],
+              );
             }).toList()
         ),
-
-        backgroundColor: Colors.white60,
-        bottomNavigationBar: Navigetion(),
       );
   }
 }

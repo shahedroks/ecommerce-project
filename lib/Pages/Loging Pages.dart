@@ -19,10 +19,28 @@ class _LogingpageState extends State<Logingpage> {
   void goToDashbord (role){
     switch(role){
       case 'user':
-        Navigator.pushReplacementNamed(context, '/mainpage');
+        Navigator.pushReplacementNamed(context, '/userpage');
+        Fluttertoast.showToast(
+            msg: "Login User ID",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
         break;
       case 'admin':
-        Navigator.pushReplacementNamed(context, '/mainpage');
+        Navigator.pushReplacementNamed(context, '/adminpage');
+        Fluttertoast.showToast(
+            msg: "Login Admin ID",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
     }
   }
 
@@ -38,24 +56,18 @@ class _LogingpageState extends State<Logingpage> {
     var jsondata = jsonDecode(res.body);
     print (res.body);
     print(res.statusCode);
+
+
     if(res.statusCode==201) {
       await prefs.setString('token', jsondata['token']);
       await prefs.setString('id', jsondata['id'].toString());
       await prefs.setString('role', jsondata['role']);
-        Fluttertoast.showToast(
-            msg: "${jsondata['Login Use']}",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0
-        );
-        goToDashbord(jsondata['role']);
+
+      goToDashbord(jsondata['role']);
     }
     else if (res.statusCode == 404){
       Fluttertoast.showToast(
-          msg: "${jsondata['Email error']}",
+          msg: "Email Error",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
@@ -64,6 +76,18 @@ class _LogingpageState extends State<Logingpage> {
           fontSize: 16.0
       );
     }
+    else if (res.statusCode == 403){
+      Fluttertoast.showToast(
+          msg: "Password error",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
+
   }
   @override
   Widget build(BuildContext context) {
@@ -87,7 +111,7 @@ class _LogingpageState extends State<Logingpage> {
             ),),
           ),
           ElevatedButton(onPressed: (){
-          loging();
+          loging ();
     },style: ElevatedButton.styleFrom(backgroundColor: Colors.red[200]), child: Text('Login',
     style: TextStyle(fontWeight: FontWeight.bold),))
         ],

@@ -60,7 +60,29 @@ class _AdminPageState extends State<AdminPage> {
          crossAxisSpacing: 8,
             crossAxisCount: 2),
                 children: alldata.map((i){
-                  return Custommap(image_url: i['image_url'],name: i['name'],price: i['price'],rating: i['rating'],description: i['description'],id: i['id'],GetData: GetData,);
+                  return Column(
+                    children: [
+                      Custommap(image_url: i['image_url'],name: i['name'],price: i['price'],rating: i['rating'],description: i['description'],id: i['id'],),
+                   GestureDetector(
+                     onTap: (){
+                       showDialog(context: context, builder: (BuildContext bc){
+                         return AlertDialog(
+                           title: Text('Do you want delete this?'),
+                           actions: [
+                             TextButton(onPressed: (){
+                               deletData(i['id']);
+                               Navigator.of(context).pop();
+                             }, child: Text('Yes')),
+                             TextButton(onPressed: (){
+                               Navigator.of(context).pop();
+                             }, child: Text('No'))
+                           ],
+                         );
+                       });
+                     },
+                     child: Icon(Icons.delete),)
+                    ],
+                  );
                 }).toList()
             ),
 
