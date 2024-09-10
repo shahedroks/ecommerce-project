@@ -6,8 +6,12 @@ import 'package:ecommars/Custom%20Widget/Navigation.dart';
 import 'package:ecommars/Custom%20Widget/searchber.dart';
 import 'package:ecommars/Pages/Product.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:icons_plus/icons_plus.dart';
+import 'package:flutter_font_icons/flutter_font_icons.dart';
+
+
+
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
 
@@ -17,6 +21,7 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   List alldata = [];
+  Map data ={};
   // defind function
   void GetData () async {
     var url = Uri.parse('http://68.178.163.174:5501/product');
@@ -26,24 +31,74 @@ class _UserPageState extends State<UserPage> {
       alldata=decode;
     });
   }
+ void GetIDData()async{
+    SharedPreferences pref =await SharedPreferences.getInstance();
+  String? user_id = pref.getString('user_id');
+  var url = Uri.parse('http://68.178.163.174:5501/user?id=${user_id}');
+  http.Response res = await http.get(url);
+  setState(() {
+    data = jsonDecode(res.body)[0];
+  });
+
+ }
   
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     GetData();
+    GetIDData();
   }
   @override
   Widget build(BuildContext context) {
     return
       Scaffold(
-        drawer: Drawer(child: ListView()),
+        drawer: Drawer(child: ListView(
+          children: [
+         UserAccountsDrawerHeader(
+             accountName:data.isEmpty ==true?Text('asgahjg'): Text('${data['name']}'),
+             accountEmail:data.isEmpty ==true?Text(""): Text('${data['email']}'),
+             decoration: BoxDecoration(color: Color(0xffFDE992))),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('profile'),
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('profile'),
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('profile'),
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('profile'),
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('profile'),
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('profile'),
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('profile'),
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('profile'),
+            )
+          ],
+        )),
         appBar: AppBar(
             flexibleSpace: Image.asset('Assets/Buy.gif', fit: BoxFit.cover,),
             title: Text('Buy And Sell',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),),
             centerTitle: true,
             actions: [
-              Icon(Icons.sell)
+              Icon(Icons.baby_changing_station)
             ],
             backgroundColor: Colors.red[300]
         ),

@@ -11,10 +11,8 @@ class ProductDescription extends StatefulWidget {
   State<ProductDescription> createState() => _ProductDescriptionState();
 }
 class _ProductDescriptionState extends State<ProductDescription> {
-
   Map data = {};
   var conter = 1;
-
   void GetData ()async{
     var url = Uri.parse('http://68.178.163.174:5501/product/?id=${widget.id}');
     http.Response res = await http.get(url);
@@ -33,7 +31,6 @@ class _ProductDescriptionState extends State<ProductDescription> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         title: Text('Detels Pages'),
       ),
@@ -54,7 +51,6 @@ class _ProductDescriptionState extends State<ProductDescription> {
               Text(data['name'],style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
               Text(data['description'],style: TextStyle(color: Colors.grey[700]),),
               SizedBox(height: 50,),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -86,7 +82,6 @@ class _ProductDescriptionState extends State<ProductDescription> {
                     padding: EdgeInsets.all(3),
                     child: Icon(Icons.add),
                     decoration: BoxDecoration(
-
                         color: Colors.green
                     ),
                   ))
@@ -94,7 +89,6 @@ class _ProductDescriptionState extends State<ProductDescription> {
               ),
               SizedBox(height: 20,),
               Text(data['price'].toString(),style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),),
-
             ]
           ),
         ):

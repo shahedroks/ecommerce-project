@@ -22,8 +22,7 @@ class _RegisterState extends State<Register> {
       'name': name.text,
       'email':email.text,
       'password':password.text,
-      'role':'role'
-
+      'role':'user'
     };
     http.Response res = await http.post(url, body: body);
     print(res.body);
@@ -55,7 +54,9 @@ class _RegisterState extends State<Register> {
           Container(
             margin: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
             child: TextField(controller: name,
-              decoration: InputDecoration(hintText: 'Email/Number',enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(2)),
+              decoration: InputDecoration(hintText: 'Name',
+                  labelText: 'Enter Your Name',
+                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(2)),
                   focusedBorder:OutlineInputBorder(borderSide: BorderSide(color: Colors.red),borderRadius: BorderRadius.circular(2)) ),),
           ),
           Container(
@@ -63,6 +64,7 @@ class _RegisterState extends State<Register> {
 
             child: TextField(controller: email,
               decoration: InputDecoration(hintText: 'email',
+                  labelText: 'Enter Your Email',
                   enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(2)),
                   focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red),borderRadius: BorderRadius.circular(2))
               ),),
@@ -72,11 +74,13 @@ class _RegisterState extends State<Register> {
 
             child: TextField(controller: password,
               decoration: InputDecoration(hintText: 'Password',
+                labelText: 'Enter Your Password',
                 enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(2)),
                 focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red),borderRadius: BorderRadius.circular(2))
             ),),
           ),
           ElevatedButton(onPressed: (){
+            Register();
           },style: ElevatedButton.styleFrom(backgroundColor: Colors.red[200]), child: Text('Login',
             style: TextStyle(fontWeight: FontWeight.bold),)),
           SizedBox(height: 20,),

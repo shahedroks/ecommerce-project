@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 class Logingpage extends StatefulWidget {
-  const Logingpage({super.key});
+   Logingpage({super.key});
 
   @override
   State<Logingpage> createState() => _LogingpageState();
@@ -43,8 +43,7 @@ class _LogingpageState extends State<Logingpage> {
         );
     }
   }
-
-  void loging()async{
+  Future <void> loging()async{
     SharedPreferences prefs =await SharedPreferences.getInstance();
     var url = Uri.parse('http://68.178.163.174:5501/user/login');
     Map body = {
@@ -87,6 +86,17 @@ class _LogingpageState extends State<Logingpage> {
           fontSize: 16.0
       );
     }
+    else if (res.statusCode == 101){
+      Fluttertoast.showToast(
+          msg: "Please Chak Your NET",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
 
   }
   @override
@@ -98,7 +108,9 @@ class _LogingpageState extends State<Logingpage> {
           Container(
             margin: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
             child: TextField(controller: email,
-            decoration: InputDecoration(hintText: 'Email/Number',enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(2)),
+            decoration: InputDecoration(hintText: 'Email/Number',
+                labelText:'Enter Your Email',
+                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(2)),
                 focusedBorder:OutlineInputBorder(borderSide: BorderSide(color: Colors.red),borderRadius: BorderRadius.circular(2)) ),),
           ),
 
@@ -106,6 +118,7 @@ class _LogingpageState extends State<Logingpage> {
             margin: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
 
             child: TextField(controller: password,decoration: InputDecoration(hintText: 'Password',
+              labelText: 'Enter Your Password',
               enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(2)),
               focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red),borderRadius: BorderRadius.circular(2))
             ),),
