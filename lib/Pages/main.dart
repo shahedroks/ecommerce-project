@@ -1,5 +1,6 @@
 import 'package:ecommars/Function/Provider.dart';
 import 'package:ecommars/Pages/AdminPage.dart';
+import 'package:ecommars/Pages/CardView.dart';
 import 'package:ecommars/Pages/Loging%20Pages.dart';
 import 'package:ecommars/Pages/Add_Product.dart';
 import 'package:ecommars/Pages/Product.dart';
@@ -20,7 +21,8 @@ void main() {
         '/adminpage' : (context) => AdminPage(),
         '/addproduct': (context) => DataAdd(),
         '/productdescription': (context)=> ProductDescription(),
-        '/register': (context) => Register()
+        '/register': (context) => Register(),
+        '/cardview':(context)=>Cardview()
     },
       debugShowCheckedModeBanner: false,
     ),

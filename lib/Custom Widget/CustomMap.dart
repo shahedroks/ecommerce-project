@@ -1,5 +1,6 @@
 import 'package:ecommars/Function/GetData.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating/flutter_rating.dart';
 class Custommap extends StatelessWidget {
   String? image_url;
   int? id;
@@ -7,16 +8,12 @@ class Custommap extends StatelessWidget {
   int? rating;
   int? price;
   String? description;
-
   Custommap({super.key,this.image_url,this.id,this.name,this.rating,this.price,this.description,});
-
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 2,),
       decoration: BoxDecoration(color: Color(0xffFDE992)),
-
-
       child: Column(
        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,8 +34,13 @@ class Custommap extends StatelessWidget {
               Text('Tk${price}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),],
           ),
           Text('${description}',maxLines: 2,overflow: TextOverflow.ellipsis,style: TextStyle(color: Colors.grey[700]),),
-          Text('${rating} '),
-          SizedBox(height: 10,),
+          Row(
+            children: [
+              StarRating(rating: rating!.toDouble(),color:Colors.red,),
+              Text('(${rating})')
+            ],
+          ),
+
         ],
       ),
     );

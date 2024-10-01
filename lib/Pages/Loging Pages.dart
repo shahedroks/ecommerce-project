@@ -43,6 +43,14 @@ class _LogingpageState extends State<Logingpage> {
         );
     }
   }
+  void Chakstatas ()async{
+    SharedPreferences prefs =await SharedPreferences.getInstance();
+    var token = await prefs.get('token');
+    var role= await prefs.get('role');
+    if(token != null){
+      goToDashbord(role);
+    }
+  }
   Future <void> loging()async{
     SharedPreferences prefs =await SharedPreferences.getInstance();
     var url = Uri.parse('http://68.178.163.174:5501/user/login');
@@ -59,7 +67,7 @@ class _LogingpageState extends State<Logingpage> {
 
     if(res.statusCode==201) {
       await prefs.setString('token', jsondata['token']);
-      await prefs.setString('id', jsondata['id'].toString());
+      await prefs.setString('user_id', jsondata['user_id'].toString());
       await prefs.setString('role', jsondata['role']);
 
       goToDashbord(jsondata['role']);
@@ -98,6 +106,12 @@ class _LogingpageState extends State<Logingpage> {
       );
     }
 
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Chakstatas();
   }
   @override
   Widget build(BuildContext context) {

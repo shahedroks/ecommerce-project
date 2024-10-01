@@ -9,7 +9,7 @@ import 'package:ecommars/Pages/Product.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
 
 
@@ -31,30 +31,45 @@ class _UserPageState extends State<UserPage> {
   // defind function
   void GetData () async {
     var url = Uri.parse('http://68.178.163.174:5501/product');
-    http.Response res = await http.get(url);
+    Response res = await get(url);
     var decode = jsonDecode(res.body);
     setState(() {
-      alldata=decode.map((el)=>Product.fromJeson(el)).toList();
+      alldata=decode.map((el)=>Product.fromJson(el)).toList();
     });
   }
  void GetIDData()async{
     SharedPreferences pref =await SharedPreferences.getInstance();
-  String? user_id = pref.getString('user_id').toString();
-  var url = Uri.parse('http://68.178.163.174:5501/user?id=${user_id}');
-  http.Response res = await http.get(url);
+  String? id = pref.getString('user_id').toString();
+  var url = Uri.parse('http://68.178.163.174:5501/user?id=${id}');
+  Response res = await get(url);
   var decode = jsonDecode(res.body);
   setState(() {
-    data = decode;
+    data = decode[0];
   });
-
  }
-  PageController pageController=PageController();
+ void DeletID()async{
+    SharedPreferences prefs =await SharedPreferences.getInstance();
+    String? user_id = prefs.getString('user_id').toString();
+    var url = Uri.parse('http://68.178.163.174:5501/user/login?id=${user_id}');
+    Response res = await delete(url);
+    print(url);
+    print(res.statusCode);
+  }
+  void LogOut()async{
+    SharedPreferences prefs =await SharedPreferences.getInstance();
+    prefs.remove('user_id');
+    prefs.remove('token');
+    prefs.remove('role');
+    Navigator.pushReplacementNamed(context, '/');
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     GetData();
     GetIDData();
+    DeletID();
   }
   @override
   Widget build(BuildContext context) {
@@ -62,12 +77,17 @@ class _UserPageState extends State<UserPage> {
 
     return
       Scaffold(
-        drawer: Drawer(child: ListView(
+        drawer: Drawer(child:
+        ListView(
           children: [
-         UserAccountsDrawerHeader(
-             accountName:Text('${data['name']}'),
-             accountEmail:Text('${data['email']}'),
-             decoration: BoxDecoration(color: Color(0xffFDE992))),
+         SizedBox(
+           height: 180,
+           child: UserAccountsDrawerHeader(
+             currentAccountPicture:data['profile_picture']!=null? ClipRRect(borderRadius: BorderRadius.circular(50),child: Container(child: Image.network('${data['profile_picture']}'),),):ClipRRect(borderRadius: BorderRadius.circular(50),child: Image.asset("Assets/Empty.jpg",fit: BoxFit.cover,),),
+               accountName:data.isEmpty != true? Text('${data['name']}',style: TextStyle(color: Colors.black,fontSize: 30,fontWeight: FontWeight.bold),):Text('shahed'),
+               accountEmail:data.isEmpty != true ? Text('${data['email']}'):Text('shahed'),
+               decoration: BoxDecoration(color: Color(0xffFDE992))),
+         ),
             ListTile(
               leading: Icon(Icons.person),
               title: Text('profile'),
@@ -93,10 +113,44 @@ class _UserPageState extends State<UserPage> {
               title: Text('Detalils'),
             ),
             ListTile(
+              onTap: (){
+                showDialog(context: context, builder: (BuildContext bc){
+                  return AlertDialog(
+                    title:Text('You Want To Logout') ,
+                    actions: [
+                      TextButton(onPressed: (){}, child: Text('No')),
+                      TextButton(onPressed: (){
+                        LogOut();
+
+                      }, child: Text('Yos'))
+                    ],
+                  );
+                });
+              },
               leading: Icon(Icons.logout),
               title: Text('Logout'),
             ),
             ListTile(
+              onTap: (){
+              showDialog(context: context, builder:(BuildContext bc){
+                return AlertDialog(
+                  title: Text('You Want To Delete'),
+                  actions: [
+                    Row(
+                      children: [
+                        TextButton(onPressed: (){
+
+                        }, child: Text('No')),
+                        TextButton(onPressed: (){
+                          DeletID();
+                        }, child: Text('yes')),
+                      ],
+                    )
+                  ],
+                );
+              });
+
+              },
               leading: Icon(Icons.delete),
               title: Text('Delete Accaunt'),
             )
@@ -109,14 +163,20 @@ class _UserPageState extends State<UserPage> {
             actions: [
               Stack(
                   children: [
-                    Icon(Iconsax.buy_crypto_outline),
+                    GestureDetector(
+                        onTap:(){
+                          Navigator.pushNamed(context, '/cardview');
+                        } ,
+                        child: Icon(Iconsax.buy_crypto_outline)),
                     Positioned(
                       top: 0,
 
                       child: Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
+                        width: 15,
+                          height: 15,
+                        decoration: BoxDecoration(color: Colors.yellow,borderRadius: BorderRadius.circular(50)),
 
-                        child: Text('${provider.cardQuantity}',style: TextStyle(fontSize: 10,color: Colors.red),),
+                        child: Text('${provider.cardQuantity}',style: TextStyle(fontSize: 10,color: Colors.black),),
 
                       ),
                     )
@@ -135,9 +195,9 @@ class _UserPageState extends State<UserPage> {
                 children: [
                   GestureDetector(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (builder) => ProductDescription(id: i['id'],)));
+                      Navigator.push(context, MaterialPageRoute(builder: (builder) => ProductDescription(id: i.id ,)));
                     },
-                      child: Custommap(image_url: i['image_url'],name: i['name'],price: i['price'],rating: i['rating'],description: i['description'],)),
+                      child: Custommap(image_url: i.image_url,name: i.name,price: i.price,rating: i.rating,description: i.description,)),
                   Row(
                     children: [
                       Container(

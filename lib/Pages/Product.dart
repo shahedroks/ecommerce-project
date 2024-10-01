@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:ecommars/Custom%20Widget/Product.dart';
 import 'package:ecommars/Function/Provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
@@ -13,15 +13,18 @@ class ProductDescription extends StatefulWidget {
 class _ProductDescriptionState extends State<ProductDescription> {
   Map data = {};
   var conter = 1;
+
+
+
   void GetData ()async{
     var url = Uri.parse('http://68.178.163.174:5501/product/?id=${widget.id}');
     http.Response res = await http.get(url);
     var decode = jsonDecode(res.body)[0];
     setState(() {
       data=decode;
+          // .map((el) => Product.fromJson(el)).toList()[0];
     });
   }
-  @override
   @override
   void initState() {
     // TODO: implement initState
@@ -30,6 +33,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
   }
   @override
   Widget build(BuildContext context) {
+    GetDataProvider provider = GetDataProvider.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Detels Pages'),
@@ -61,6 +65,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                             conter -=1;
                           });
                         }
+
                       },
                       child: Container(
                     padding: EdgeInsets.all(3),
@@ -77,6 +82,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                       setState(() {
                         conter +=1;
                       });
+
                     },
                       child: Container(
                     padding: EdgeInsets.all(3),
@@ -88,11 +94,11 @@ class _ProductDescriptionState extends State<ProductDescription> {
                 ],
               ),
               SizedBox(height: 20,),
-              Text(data['price'].toString(),style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),),
+              Text('${data['price']*conter}',style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),),
             ]
           ),
         ):
-        Text('Data Is isEmpty')
+        Text('Data Is isEmpty'),
       )
     );
   }

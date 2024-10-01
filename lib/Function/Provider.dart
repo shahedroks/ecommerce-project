@@ -14,6 +14,12 @@ class GetDataProvider extends ChangeNotifier{
      cardQuantity++;
      totalPrice += Product.price;
    }
+   else{
+     cardQuantity++;
+     Product.quantity++;
+     card.add(Product);
+     totalPrice+=Product.price;
+   }
    notifyListeners();
  }
  void RemoveFromCard (Product){
